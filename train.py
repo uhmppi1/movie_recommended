@@ -13,13 +13,13 @@ def train_model(model, X_train, y_train, epochs=200):
     model.compile(optimizer='adam', loss='mse')
 
     # add call backs
-    early_stopper = EarlyStopping(monitor='val_rmse', patience=10, verbose=1)
+    early_stopper = EarlyStopping(monitor='val_loss', patience=10, verbose=1)
 
     model_json = model.to_json()
     with open("checkpoint/%s.json" % model.name, "w") as json_file:
         json.dump(model_json, json_file)
     model_saver = ModelCheckpoint(filepath=("checkpoint/%s.h5" % model.name),
-                                  monitor='val_rmse',
+                                  monitor='val_loss',
                                   save_best_only=True,
                                   save_weights_only=True)
     # train model
